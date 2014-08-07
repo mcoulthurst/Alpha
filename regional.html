@@ -323,11 +323,11 @@
   <div class="row">
     <h1 ><span class="glyphicon glyphicon-map-marker"></span> Regional Data<span id="mainHeading"></span></h1>
     <div id="" class="col-sm-3">
-
+      <h4>Search</h4>
             <form class="form-inline" role="search">
               <div class="form-group">
                 <span class="" data-toggle="collapse" data-target="#search-panel">
-                  <label for="postcode">Search by Postcode:</label>
+                  <label for="postcode">By Postcode:</label>
                 </span>
                 <input id="postcode" type="text" class="form-control" placeholder="Search">
               <button type="submit" class="btn btn-default" id="search">
@@ -370,27 +370,51 @@
         </button>
     </div>
 
-    <div id="" class="col-sm-9">
+    <div id="" class="col-sm-3">
+      <h4>Compare</h4>
+            <form class="form-inline" role="search">
+              <div class="form-group">
+                <span class="" data-toggle="collapse" data-target="#search-panel">
+                  <label for="postcode"> Postcode:</label>
+                </span>
+                <input id="postcode2" type="text" class="form-control" placeholder="Search">
+              <button type="submit" class="btn btn-default" id="search">
+                <span class="fa fa-search fa-lg form-control-feedback"></span>
+              </button>
+              </div>
+            </form>
+            <hr/>
+          
+          <form role="form">
+            
+            <div class="form-group">
+              <label for="region2">Select a region</label>
+              <select class="form-control selectpicker" id="region2">
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="county2">Select a county</label>
+              <select class="form-control selectpicker" id="county2">
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="district2">Select a district</label>
+              <select class="form-control selectpicker" id="district2">
+              </select>
+            </div>
+
+          </form>
+    </div>
+
+    <div id="" class="col-sm-6">
       <div id="map"></div>
     </div>
   </div>
 
   <div class="row">
-    <div id="" class="col-sm-3">
-    </div>
-    <div id="" class="col-sm-1">
-    </div>
-    <div id="" class="col-sm-4">
 
-    </div>
-
-
-
-    <div id="" class="col-sm-1">
-    </div>
-    <div class="col-sm-3">
-
-    </div>
   </div>
 
 
@@ -495,7 +519,12 @@
       <div id='pyramid' class='chart'>
       </div>
     </div>
-    <div class="col-sm-8">
+    <div class="col-sm-4">
+      <h2 id="popPyramid2">Population Pyramid</h2>
+      <div id='pyramid2' class='chart'>
+      </div>
+    </div>
+    <div class="col-sm-4">
       <h2 id="popComparison">Population Comparison</h2>
       <div id='stackedBar' class='chart'>
       </div>

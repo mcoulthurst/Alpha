@@ -41,6 +41,9 @@ var areas = (function () {
       $('#region')
             .append($('<option>', { name : -1 })
             .text("Pick a region..."));
+      $('#region2')
+            .append($('<option>', { name : -1 })
+            .text("Pick a region..."));
 
       regions["TopLevel"] = {};
       regions["TopLevel"].children = [];
@@ -71,7 +74,11 @@ var areas = (function () {
 
           if( value.entity === "region"  ){
             regions["TopLevel"].children.push( {name:value.name, code:value.code} );
+
             $('#region').append($('<option>', { name : index })
+              .text(value.region).val(value.code)); 
+
+            $('#region2').append($('<option>', { name : index })
               .text(value.region).val(value.code)); 
           }
 
@@ -112,42 +119,61 @@ var areas = (function () {
     }
 
 
-    function getRegion(){
+    function getRegion(target){
       var str = "";
-      $( "#region option:selected" ).each(function() {
-        str += $( this ).val();
-      });
+      if(target===2){
+        $( "#region2 option:selected" ).each(function() {
+          str += $( this ).val();
+        });
+      }else{
+        $( "#region option:selected" ).each(function() {
+          str += $( this ).val();
+        });
+      }
 
      // showData( str );
-      updateDisplay( str );
-      showCounty(str);
+      updateDisplay( str, target );
+      showCounty(str, target);
     }
 
 
-    function getCounty(){
+    function getCounty(target){
       var str = "";
-      $( "#county option:selected" ).each(function() {
-        str += $( this ).val();
-      });
+      if(target===2){
+        $( "#county2 option:selected" ).each(function() {
+          str += $( this ).val();
+        });
+      }else{
+        $( "#county option:selected" ).each(function() {
+          str += $( this ).val();
+        });
+      }
 
      // showData(str);
-      updateDisplay( str );
-      showDistrict(str);
+      updateDisplay( str, target );
+      showDistrict(str, target);
     }
 
 
-    function getDistrict(){
+    function getDistrict(target){
       var str = "";
-      $( "#district option:selected" ).each(function() {
-        str += $( this ).val();
-      });
+      if(target===2){
+        $( "#district2 option:selected" ).each(function() {
+          str += $( this ).val();
+        });
+      }else{
+        $( "#district option:selected" ).each(function() {
+          str += $( this ).val();
+        });
+      }
 
     //  showData(str);
-      updateDisplay( str );
+      updateDisplay( str, target );
      }
 
 
     function getSiblings(str){
+      console.log("get str " + str );
       var parent = regions[str].parent;
       var siblings;
 
@@ -164,51 +190,97 @@ var areas = (function () {
       return regions[str].entity;
     }
 
-    function showCounty(str){
+    function showCounty(str, target){
       var showFirstItem = true;
       var counties = regions[str].children;
 
-      $('#county').empty();
-      $('#district').empty();
+      if(target===2){
+        $('#county2').empty();
+        $('#district2').empty();
 
-      $('#county')
-            .append($('<option>', { name : -1 })
-            .text("Pick a county...."));
+        $('#county2')
+              .append($('<option>', { name : -1 })
+              .text("Pick a county...."));
 
-      $.each(counties, function (index,value){
+        $.each(counties, function (index,value){
+          $('#county2')
+              .append($('<option>', { name : value.name })
+              .text(value.name).val(value.code)); 
+              if(showFirstItem){
+                showFirstItem = false;
+                showDistrict(value.code);
+              }
+        });
+        $('.selectpicker').selectpicker('refresh');
+        
+
+      }else{
+        $('#county').empty();
+        $('#district').empty();
+
         $('#county')
-            .append($('<option>', { name : value.name })
-            .text(value.name).val(value.code)); 
-            if(showFirstItem){
-              showFirstItem = false;
-              showDistrict(value.code);
-            }
-      });
-      $('.selectpicker').selectpicker('refresh');
+              .append($('<option>', { name : -1 })
+              .text("Pick a county...."));
+
+        $.each(counties, function (index,value){
+          $('#county')
+              .append($('<option>', { name : value.name })
+              .text(value.name).val(value.code)); 
+              if(showFirstItem){
+                showFirstItem = false;
+                showDistrict(value.code);
+              }
+        });
+        $('.selectpicker').selectpicker('refresh');
+      }
+
     }
 
 
-    function showDistrict(str){
+    function showDistrict(str, target){
       var districts = regions[str].children;
       
-      $('#district').empty();
 
-      if(districts){
-      $('#district')
-            .append($('<option>', { name : -1 })
-            .text("Pick a district...."));
-        $.each(districts, function (index,value){
-          $('#district')
-            .append($('<option>', { name : value.name })
-            .text(value.name).val(value.code)); 
-        });
-        
+      if(target===2){
+        $('#district2').empty();
+
+        if(districts){
+        $('#district2')
+              .append($('<option>', { name : -1 })
+              .text("Pick a district...."));
+          $.each(districts, function (index,value){
+            $('#district2')
+              .append($('<option>', { name : value.name })
+              .text(value.name).val(value.code)); 
+          });
+          
+        }else{
+          $('#district2')
+              .append($('<option>', { name : "UA" })
+              .text( " - UA: No Districts - " )); 
+        }
+        $('.selectpicker').selectpicker('refresh');
       }else{
+        $('#district').empty();
+
+        if(districts){
         $('#district')
-            .append($('<option>', { name : "UA" })
-            .text( " - UA: No Districts - " )); 
+              .append($('<option>', { name : -1 })
+              .text("Pick a district...."));
+          $.each(districts, function (index,value){
+            $('#district')
+              .append($('<option>', { name : value.name })
+              .text(value.name).val(value.code)); 
+          });
+          
+        }else{
+          $('#district')
+              .append($('<option>', { name : "UA" })
+              .text( " - UA: No Districts - " )); 
+        }
+        $('.selectpicker').selectpicker('refresh');
+
       }
-      $('.selectpicker').selectpicker('refresh');
     }
 
 

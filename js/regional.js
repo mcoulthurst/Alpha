@@ -56,13 +56,23 @@ var regional = (function () {
 
   function addListeners(){
     $("#region").change(function(e) {
-      return areas.getRegion(); 
+      return areas.getRegion(1); 
     });
     $("#county").change(function(e) {
-      return areas.getCounty(); 
+      return areas.getCounty(1); 
     });
     $("#district").change(function(e) {
-      return areas.getDistrict(); 
+      return areas.getDistrict(1); 
+    });
+
+    $("#region2").change(function(e) {
+      return areas.getRegion(2); 
+    });
+    $("#county2").change(function(e) {
+      return areas.getCounty(2); 
+    });
+    $("#district2").change(function(e) {
+      return areas.getDistrict(2); 
     });
 
     $("#search").click( function(evt){

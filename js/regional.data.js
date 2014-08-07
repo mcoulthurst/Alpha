@@ -4,8 +4,9 @@ var POP_URL = "data/pyramid.csv";
 var TREND_URL = "data/population.csv";
 
 var POSTCODE_URL = "//mapit.mysociety.org/postcode/";
+var POINT_URL = "//mapit.mysociety.org/point/4326/";
 
-var YEAR = "2013";
+var YEAR = 2013;
 
 var ORANGE ='#FF950E';
 var pyramidData;
@@ -58,6 +59,40 @@ function testPostCode () {
 }
 
 
+  function getPointData(latLng){
+      console.log ("getPointData")
+      console.log("http://mapit.mysociety.org/point/4326/" + latLng.lng() + "," + latLng.lat());
+      var url = POINT_URL + latLng.lng() + "," + latLng.lat() ;
+
+      loader.setUrl( url );
+      console.log("Data URL " + url);
+      loader.loadData( parsePointData );
+  }
+
+
+
+  function parsePointData(returned){
+    var ons_id 
+
+    data = returned;
+    console.log("parsePointData");
+    console.log(data);
+
+    $.each(data, function(index, value){
+      console.log(value);
+
+      //find Unitary Authority; County; opr Metro District
+      if(value.type==="UTA" || value.type==="CTY" || value.type==="MTD"){
+        console.log(value.name +": " + ons_id);
+        ons_id = value.codes.gss
+      }
+
+    })
+    console.log("ONS " + ons_id );
+
+    updateDisplay( ons_id );
+  }
+
 
   function parseData(returned){
     data = returned;
@@ -83,9 +118,10 @@ function testPostCode () {
   }
 
 
-  function updateDisplay(str){
+  function updateDisplay(str, target){
+    console.log("updateDisplay " + str);
     var siblingList  = areas.getSiblings( str );
-    showData(str);
+    showData(str, target);
     showComparison(siblingList, str);
 
     //hide marker
@@ -95,7 +131,7 @@ function testPostCode () {
 
 
 
-  function showData(str){
+  function showData(str, target){
     console.log( "showData " + str );
     var data = areaObj[str];
     //console.log(data);
@@ -126,7 +162,7 @@ function testPostCode () {
 
 
     $("#mainHeading").text(": " + title );
-    $("#title").text("Demographics: " + title + " (" + suffix + pc_change + "% change from " + YEAR + ")");
+    $("#title").text("Demographics: " + title + " (" + suffix + pc_change + "% change from " + (YEAR-1) + ")");
     $("#pop2012").text(data.changes.now );
     $("#pop2011").text( data.changes.previous);
     //console.log("AREA:"  + data.area);
@@ -198,8 +234,11 @@ function testPostCode () {
 
     //change chart
 
-    
-    pyramid = $('#pyramid').highcharts();
+    if(target===2){
+      pyramid = $('#pyramid2').highcharts();
+    }else{
+      pyramid = $('#pyramid').highcharts();
+    }
 
     pyramid.series[1].setData( data.series.female );
     pyramid.series[0].setData( data.series.male );
