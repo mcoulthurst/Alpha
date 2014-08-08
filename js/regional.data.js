@@ -122,7 +122,7 @@ function testPostCode () {
     console.log("updateDisplay " + str);
     var siblingList  = areas.getSiblings( str );
     showData(str, target);
-    showComparison(siblingList, str);
+    showComparison(siblingList, str, target);
 
     //hide marker
     hideMarker();
@@ -263,7 +263,7 @@ function testPostCode () {
 
 
 
-    function showComparison(list, str){
+    function showComparison(list, str, target){
 
       //console.log(list);
       var displayText = "";
@@ -299,9 +299,15 @@ function testPostCode () {
       displayText = "Population Comparison";
 
       $("#popComparison").text( displayText );
+
+      if(target===2){
+        barChart = $('#stackedBar2').highcharts();
+      }else{
+        barChart = $('#stackedBar').highcharts();
+      }
  
 
-      barChart = $('#stackedBar').highcharts();
+      
       barChart.series[0].setData( totalData );
       barChart.xAxis[0].setCategories(totalCats);
 
