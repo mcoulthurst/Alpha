@@ -3,10 +3,10 @@
 var areas = (function () {
 
   var AREA_URL = "data/areas.csv";
-  var REGION="region"; 
-  var COUNTY="county"; 
-  var DISTRICT="district"; 
- 
+  var REGION="region";
+  var COUNTY="county";
+  var DISTRICT="district";
+
   var areaArray = [];
   var idDictionary = {};
 
@@ -41,13 +41,11 @@ var areas = (function () {
       $('#region')
             .append($('<option>', { name : -1 })
             .text("Pick a region..."));
-      $('#region2')
-            .append($('<option>', { name : -1 })
-            .text("Pick a region..."));
+
 
       regions["TopLevel"] = {};
       regions["TopLevel"].children = [];
-      // loop thru he list and build a dictionary to look up the parent code based on the name
+      // loop thru the list and build a dictionary to look up the parent code based on the name
       $.each(areaArray, function (index,value){
 
           idDictionary[value.name] = value.code;
@@ -69,20 +67,18 @@ var areas = (function () {
 
 
       $.each(areaArray, function (index,value){
-       
+
         if(value.region !== ""){
 
-          if( value.entity === "region"  ){
+          if( value.entity === "region"  || value.entity === "country" ){
             regions["TopLevel"].children.push( {name:value.name, code:value.code} );
 
             $('#region').append($('<option>', { name : index })
-              .text(value.region).val(value.code)); 
+              .text(value.region).val(value.code));
 
-            $('#region2').append($('<option>', { name : index })
-              .text(value.region).val(value.code)); 
           }
 
- 
+
           if( value.entity === "county" || value.entity === "unitary" || value.entity === "London borough"  || value.entity === "Metropolitan district"  || value.entity === "NI district" || value.entity === "Sc district"  || value.entity === "W district"){
             //console.log("got entity " + value.code + ":: "+ value.name + ":: "+ value.region + ":: "+ idDictionary[value.region]);
             var parent = idDictionary[value.region];
@@ -119,61 +115,54 @@ var areas = (function () {
     }
 
 
-    function getRegion(target){
+    function getRegion(){
       var str = "";
-      if(target===2){
-        $( "#region2 option:selected" ).each(function() {
-          str += $( this ).val();
-        });
-      }else{
+
         $( "#region option:selected" ).each(function() {
           str += $( this ).val();
         });
-      }
+
 
      // showData( str );
-      updateDisplay( str, target );
-      showCounty(str, target);
+      //updateDisplay( str );
+      setArea( str );
+      showSummary(str);
+      showCounty(str);
     }
 
 
-    function getCounty(target){
+    function getCounty(){
       var str = "";
-      if(target===2){
-        $( "#county2 option:selected" ).each(function() {
-          str += $( this ).val();
-        });
-      }else{
+
         $( "#county option:selected" ).each(function() {
           str += $( this ).val();
         });
-      }
+
 
      // showData(str);
-      updateDisplay( str, target );
-      showDistrict(str, target);
+      ///updateDisplay( str );
+      setArea( str );
+      showSummary(str);
+      showDistrict(str);
     }
 
 
-    function getDistrict(target){
+    function getDistrict(){
       var str = "";
-      if(target===2){
-        $( "#district2 option:selected" ).each(function() {
-          str += $( this ).val();
-        });
-      }else{
-        $( "#district option:selected" ).each(function() {
-          str += $( this ).val();
-        });
-      }
 
-    //  showData(str);
-      updateDisplay( str, target );
-     }
+      $( "#district option:selected" ).each(function() {
+        str += $( this ).val();
+      });
+
+      //updateDisplay( str );
+      setArea( str );
+      showSummary(str);
+    }
 
 
     function getSiblings(str){
       console.log("get str " + str );
+
       var parent = regions[str].parent;
       var siblings;
 
@@ -182,85 +171,61 @@ var areas = (function () {
       }else{
         siblings = regions[parent].children;
       }
-     
+
       return siblings;
     }
+
+
+    function getParent(str){
+      var parent = regions[str].parent;
+      console.log(regions[str] );
+      console.log("get str " + str +":" + parent);
+
+      if(parent===""){
+        parent = "K02000001";
+      }
+/*
+      if(regions[str].level===0){
+        siblings = regions["TopLevel"].children;
+      }else{
+        siblings = regions[parent].children;
+      }*/
+
+      return parent;
+    }
+
 
     function getRegionType(str){
       return regions[str].entity;
     }
 
-    function showCounty(str, target){
+    function showCounty(str){
       var showFirstItem = true;
       var counties = regions[str].children;
 
-      if(target===2){
-        $('#county2').empty();
-        $('#district2').empty();
+      $('#county').empty();
+      $('#district').empty();
 
-        $('#county2')
-              .append($('<option>', { name : -1 })
-              .text("Pick a county...."));
+      $('#county')
+            .append($('<option>', { name : -1 })
+            .text("Pick a county...."));
 
-        $.each(counties, function (index,value){
-          $('#county2')
-              .append($('<option>', { name : value.name })
-              .text(value.name).val(value.code)); 
-              if(showFirstItem){
-                showFirstItem = false;
-                showDistrict(value.code);
-              }
-        });
-        $('.selectpicker').selectpicker('refresh');
-        
-
-      }else{
-        $('#county').empty();
-        $('#district').empty();
-
+      $.each(counties, function (index,value){
         $('#county')
-              .append($('<option>', { name : -1 })
-              .text("Pick a county...."));
-
-        $.each(counties, function (index,value){
-          $('#county')
-              .append($('<option>', { name : value.name })
-              .text(value.name).val(value.code)); 
-              if(showFirstItem){
-                showFirstItem = false;
-                showDistrict(value.code);
-              }
-        });
-        $('.selectpicker').selectpicker('refresh');
-      }
-
+            .append($('<option>', { name : value.name })
+            .text(value.name).val(value.code));
+            if(showFirstItem){
+              showFirstItem = false;
+              showDistrict(value.code);
+            }
+      });
+      $('.selectpicker').selectpicker('refresh');
     }
 
 
-    function showDistrict(str, target){
+    function showDistrict(str){
       var districts = regions[str].children;
-      
 
-      if(target===2){
-        $('#district2').empty();
-
-        if(districts){
-        $('#district2')
-              .append($('<option>', { name : -1 })
-              .text("Pick a district...."));
-          $.each(districts, function (index,value){
-            $('#district2')
-              .append($('<option>', { name : value.name })
-              .text(value.name).val(value.code)); 
-          });
-          
-        }else{
-          $('#district2')
-              .append($('<option>', { name : "UA" })
-              .text( " - UA: No Districts - " )); 
-        }
-        $('.selectpicker').selectpicker('refresh');
-      }else{
         $('#district').empty();
 
         if(districts){
@@ -270,17 +235,16 @@ var areas = (function () {
           $.each(districts, function (index,value){
             $('#district')
               .append($('<option>', { name : value.name })
-              .text(value.name).val(value.code)); 
+              .text(value.name).val(value.code));
           });
-          
+
         }else{
           $('#district')
               .append($('<option>', { name : "UA" })
-              .text( " - UA: No Districts - " )); 
+              .text( " - UA: No Districts - " ));
         }
         $('.selectpicker').selectpicker('refresh');
 
-      }
     }
 
 
@@ -288,6 +252,7 @@ var areas = (function () {
     return{
       loadData:loadData,
       getSiblings:getSiblings,
+      getParent:getParent,
       showCounty:showCounty,
       getRegion:getRegion,
       getCounty:getCounty,
