@@ -50,6 +50,13 @@
     font-size:32px;
   }
 
+  .thumbChart{
+    height:100px;
+  }
+  .thumbPyramid{
+    height:200px;
+  }
+
   </style>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -346,18 +353,6 @@
 
 
 
-          <button type="button" class="btn btn-primary btn-block" id="viewBtn">
-            <span class="fa fa-chevron-right pull-left pad-left">&nbsp;</span>
-            <span class="pull-left">View charts</span>
-          </button>
-          <button type="button" class="btn btn-primary btn-block" id="addBtn">
-            <span class="fa fa-chevron-right pull-left pad-left">&nbsp;</span>
-            <span class="pull-left">Add to comparison</span>
-          </button>
-          <button type="button" class="btn btn-danger btn-block" id="clearBtn">
-            <span class="fa fa-chevron-right pull-left pad-left">&nbsp;</span>
-            <span class="pull-left">Clear charts</span>
-          </button>
 
           </form>
 
@@ -379,31 +374,79 @@
 
 
 
+
+          <button type="button" class="btn btn-primary btn-block" id="addBtn">
+            <span class="fa fa-plus pull-left pad-left">&nbsp;</span>
+            <span class="pull-left">Add to comparison</span>
+          </button>
+          <button type="button" class="btn btn-danger btn-block" id="clearBtn">
+            <span class="fa fa-ban pull-left pad-left">&nbsp;</span>
+            <span class="pull-left">Clear charts</span>
+          </button>
+
+
         <button type="button" class="btn btn-info btn-block disabled ">
           <span class="fa fa-chevron-right pull-left pad-left">&nbsp;</span>
           <span class="pull-left">More data about this region</span>
         </button>
         <button type="button" class="btn btn-info btn-block disabled ">
-          <span class="fa fa-chevron-down pull-left pad-left">&nbsp;</span>
+          <span class="fa fa-download pull-left pad-left">&nbsp;</span>
           <span class="pull-left">Download all data</span>
         </button>
     </div>
 
     <div id="" class="col-sm-3">
-      <h3>Headlines</h3>
-      <span id="name"></span>
-      <span id="pop"></span>
+      <div id="" class="panel">
+      <h4>Population</h4>
+
+      <div class="row">
+      <div id="" class="col-sm-8">
+        <span id="name"></span>
+      </div>
+      <div id="" class="col-sm-4">
+        <span id="pop"></span>
+      </div>
+      </div>
       <br/>
-      <span id="parent_name"></span>
-      <span id="parent_pop"></span>
+      <div class="row">
+      <div id="" class="col-sm-8">
+        <span id="parent_name"></span>
+      </div>
+      <div id="" class="col-sm-4">
+        <span id="parent_pop"></span>
+      </div>
+      </div>
       <br/>
-      <span id="gparent_name"></span>
-      <span id="gparent_pop"></span>
+      <div class="row">
+      <div id="" class="col-sm-8">
+        <span id="gparent_name"></span>
+      </div>
+      <div id="" class="col-sm-4">
+       <span id="gparent_pop"></span>
+      </div>
+      </div>
       <br/>
-      <span id="ancestor_name"></span>
-      <span id="ancestor_pop"></span>
+      <div class="row">
+      <div id="" class="col-sm-8">
+        <span id="ancestor_name"></span>
+      </div>
+      <div id="" class="col-sm-4">
+        <span id="ancestor_pop"></span>
+      </div>
+      </div>
+   
       <br/>
+      </div>
+
+          <div id="thumbChange" class="thumbChart"></div>
+      <div id="thumbTrend" class="thumbChart"></div>
+      <div id="thumbPyramid" class="thumbPyramid"></div>
+
+
     </div>
+
+
+
 
     <div id="" class="col-sm-6">
       <div id="map"></div>
@@ -424,6 +467,8 @@
 
   <div class="row">
     <h2 id="comparison">Area Comparisons</h2>
+
+
     <div id='comparisonsBar' class='chart'>
     </div>
   </div>

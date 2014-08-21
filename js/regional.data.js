@@ -15,6 +15,9 @@ var changes;
 var trend;
 var areaObj = {};
 var barChart;
+var trendThumb;
+var changeThumb;
+var pyramidThumb;
 
 var areaMap = {};
 var areaMeasures = {};
@@ -162,7 +165,7 @@ function testPostCode () {
     console.log(areaObj[id]);
     // region / county / district
     $("#name").text(areaObj[id].name);
-    $("#pop").text( "pop. " + areaObj[id].trends[12]);
+    $("#pop").text( areaObj[id].trends[12]);
 
     var region = areas.getRegionType(id);
     console.log("get region data " + id + " is " + region );
@@ -179,47 +182,67 @@ function testPostCode () {
 
     if(region==="region"){
       $("#parent_name").text(areaObj[parent].name);
-      $("#parent_pop").text( "pop. " + areaObj[parent].trends[12]);
+      $("#parent_pop").text( areaObj[parent].trends[12]);
       $("#gparent_name").text( "" );
       $("#gparent_pop").text( " ");
       $("#ancestor_name").text( "" );
-      $("#ancestor_pop").text( " ");
+      $("#ancestor_pop").text( "");
     };
 
     if(region==="county"){
         $("#parent_name").text(areaObj[parent].name);
-        $("#parent_pop").text( "pop. " + areaObj[parent].trends[12]);
+        $("#parent_pop").text( areaObj[parent].trends[12]);
 
         $("#gparent_name").text( areaObj["K02000001"].name );
-        $("#gparent_pop").text( "pop. " + areaObj["K02000001"].trends[12]);
+        $("#gparent_pop").text( areaObj["K02000001"].trends[12]);
 
         $("#ancestor_name").text("");
-        $("#ancestor_pop").text( );
+        $("#ancestor_pop").text( "" );
     }
 
     if(region==="district"){
         var gparent = areas.getParent(parent);
         console.log(gparent);
         $("#ancestor_name").text(areaObj["K02000001"].name);
-        $("#ancestor_pop").text( "pop. " + areaObj["K02000001"].trends[12]);
+        $("#ancestor_pop").text( areaObj["K02000001"].trends[12]);
 
         $("#gparent_name").text(areaObj[gparent].name);
-        $("#gparent_pop").text( "pop. " + areaObj[gparent].trends[12]);
+        $("#gparent_pop").text( areaObj[gparent].trends[12]);
 
         $("#parent_name").text( areaObj[parent].name );
-        $("#parent_pop").text( "pop. " + areaObj[parent].trends[12]);
+        $("#parent_pop").text( areaObj[parent].trends[12]);
 
     }
+
+
+      showSingle( id );
 
   }
 
 
 
   function showSingle( id ) {
-    comparisons = [];
-    comparisons.push(id);
+   // comparisons = [];
+    //comparisons.push(id);
 
-    updateDisplay();
+   // updateDisplay();
+   console.log(areaObj[id]);
+
+    trendThumb.series[0].setData( areaObj[id].trends );
+    trendThumb.series[0].name = areaObj[id].name;
+
+
+      changeThumb.series[2].setData( [areaObj[id].changes["natural change"]] );
+      changeThumb.series[2].name = "Natural Change";
+      changeThumb.series[1].setData( [areaObj[id].changes["Internal Net"]] );
+      changeThumb.series[1].name = "UK";
+      changeThumb.series[0].setData( [areaObj[id].changes["International Net"]] );
+      changeThumb.series[0].name = "Migration";
+      changeThumb.xAxis[0].setCategories(areaObj[id].name);
+
+     // pyramidThumb.setTitle({text: areaObj[id].name });
+      pyramidThumb.series[1].setData( areaObj[id].series.female );
+      pyramidThumb.series[0].setData( areaObj[id].series.male );
   }
 
 
@@ -243,7 +266,7 @@ function testPostCode () {
 
   //loop through the list of comparisons and extract the data
   $.each(comparisons, function (index, value){
-    console.log(index , value);
+   // console.log(index , value);
     //trend
     trends.push( areaObj[value].trends );
 
