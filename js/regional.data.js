@@ -238,7 +238,7 @@ function testPostCode () {
       changeThumb.series[1].name = "UK";
       changeThumb.series[0].setData( [areaObj[id].changes["International Net"]] );
       changeThumb.series[0].name = "Migration";
-      changeThumb.xAxis[0].setCategories(areaObj[id].name);
+      changeThumb.xAxis[0].setCategories( [areaObj[id].name] );
 
      // pyramidThumb.setTitle({text: areaObj[id].name });
       pyramidThumb.series[1].setData( areaObj[id].series.female );
@@ -628,8 +628,8 @@ $("#areas").empty();
     areaObj[code].ageGroups = { u18:parseInt(value.u18,10) , adult:parseInt(value.adult,10) , over64:parseInt(value.over64,10) };
 
     for ( var i=0; i<19;i++){
-      areaObj[code].series.male[i] = parseInt(value["male"+i],10) ;
-      areaObj[code].series.female[i] = -parseInt(value["male"+i],10) ;
+      areaObj[code].series.male[i] = -parseInt(value["male"+i],10) ;
+      areaObj[code].series.female[i] = parseInt(value["female"+i],10) ;
     }
 
     areaObj[code].maleTotal = parseInt( value.males,10);

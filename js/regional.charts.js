@@ -137,100 +137,7 @@ var options = {
 
     Highcharts.setOptions(options);
 
-    //thumbs
 
-    //ANNUAL CHANGE
-    options.chart.renderTo = 'thumbChange';
-    options.chart.type = 'bar';
-    options.title.text = null;
-    options.yAxis.title.text = null;
-    options.legend.enabled = false;
-    options.series= [
-                        { name: 'Migration', data: [0] },
-                        { name: 'UK', data: [0] },
-                        { name: 'Natural', data: [0] }
-                      ];
-    changeThumb = new Highcharts.Chart(options);
-
-    // TREND
-    options.chart.renderTo = 'thumbTrend';
-    options.chart.type = 'line';
-    options.title.text = '';
-/*    options.xAxis = [{
-                categories : [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-                reversed: false
-            }];*/
-    options.xAxis = {
-                      categories : ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013'],
-                     lineWidth: 0,
-                     minorGridLineWidth: 0,
-                     lineColor: 'transparent',
-                     
-                     labels: {
-                         enabled: false
-                     },
-                     minorTickLength: 0,
-                     tickLength: 0
-                  };
-
-   // options.yAxis.enabled = false;
-    options.plotOptions.series = {  };
-    options.plotOptions.line.marker.enabled = false;
-    options.series= [
-                      { data: [0] }
-                    ];
-                    options.tooltip = {
-    formatter: function() {
-        return 'The value for <b>' + this.x + '</b> is <b>' + this.y + '</b>, in series '+ this.series.name;
-    }
-}
-    trendThumb = new Highcharts.Chart(options);
-
-
-    //POPULATION PYRAMID
-    options.chart.renderTo = 'thumbPyramid';
-    options.chart.type = 'bar';
-
-    options.title.text = null;
-    options.plotOptions.series = {  };
-    //options.xAxis.enabled = false;
-
-    options.xAxis = [{
-                categories : [ '0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44','45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75-79', '80-84', '85-89', '90 +'],
-                reversed: false,
-                labels: {
-                    enabled:false
-                }
-            }, { // mirror axis on right side
-              categories : [ '0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44','45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75-79', '80-84', '85-89', '90 +'],
-                opposite: true,
-                reversed: false,
-                linkedTo: 0,
-                labels: {
-                    enabled:false
-                }
-            }];
-           
-    options.series= [
-                      { name: 'Female', data: [0] },
-                      { name: 'Male', data: [0] },
-                    ];
-    options.plotOptions.series = {
-                    stacking: 'normal'
-                }
-    options.colors = [
-            'rgb(255, 66, 14)',           // red
-            'rgb(168, 189, 58)'         // green
-            ];
-
-
-    options.yAxis.labels = {
-                    formatter: function(){
-                        return Math.abs(this.value);
-                    }
-                };
-
-   pyramidThumb = new Highcharts.Chart(options);
 
 
 
@@ -338,5 +245,123 @@ var options = {
 
 
 
+    //thumbs
+
+    //ANNUAL CHANGE
+    options.chart.renderTo = 'thumbChange';
+    options.chart.type = 'bar';
+    options.title.text = null;
+    options.yAxis.title.text = null;
+   // options.yAxis.labels.enabled = false;
+   options.xAxis = {
+                     labels: {
+                         enabled: false
+                     }
+                  };
+    options.legend.enabled = false;
+    options.plotOptions.series = {};
+    options.colors =  [
+            'rgb(0, 132, 209)',           // blue
+            'rgb(255, 149, 14)',          // orange
+            'rgb(255, 66, 14)',           // red
+            'rgb(168, 189, 58)'         // green
+            ];
+    options.series= [
+                        { name: 'Migration', data: [0] },
+                        { name: 'UK', data: [0] },
+                        { name: 'Natural', data: [0] }
+                      ];
+    changeThumb = new Highcharts.Chart(options);
+
+    // TREND
+    options.chart.renderTo = 'thumbTrend';
+    options.chart.type = 'line';
+    options.title.text = '';
+/*    options.xAxis = [{
+                categories : [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+                reversed: false
+            }];*/
+    options.xAxis = {
+                      categories : ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013'],
+                     lineWidth: 0,
+                     minorGridLineWidth: 0,
+                     lineColor: 'transparent',
+                     
+                     labels: {
+                         enabled: false
+                     },
+                     minorTickLength: 0,
+                     tickLength: 0
+                  };
+
+   // options.yAxis.enabled = false;
+    options.plotOptions.series = {  };
+    options.plotOptions.line.marker.enabled = false;
+    options.series= [
+                      { data: [0] }
+                    ];
+                    options.tooltip = {
+    formatter: function() {
+        return 'Population <b>' + Math.abs(this.y) + '</b>, ('+ this.x +')';
+    }
+}
+    trendThumb = new Highcharts.Chart(options);
+
+
+
+    //POPULATION PYRAMID
+    options.chart.renderTo = 'thumbPyramid';
+    options.chart.type = 'bar';
+
+    options.title.text = null;
+    options.plotOptions.series = {  };
+    //options.xAxis.enabled = false;
+
+    options.xAxis = [{
+                categories : [ '0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44','45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75-79', '80-84', '85-89', '90 +'],
+                reversed: false,
+                lineWidth: 0,
+                     minorGridLineWidth: 0,
+                     lineColor: 'transparent',
+                     
+                     labels: {
+                         enabled: false
+                     },
+                     minorTickLength: 0,
+                     tickLength: 0
+            }, { // mirror axis on right side
+              categories : [ '0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44','45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75-79', '80-84', '85-89', '90 +'],
+                opposite: true,
+                reversed: false,
+                linkedTo: 0,
+                lineWidth: 0,
+                     minorGridLineWidth: 0,
+                     lineColor: 'transparent',
+                     
+                     labels: {
+                         enabled: false
+                     },
+                     minorTickLength: 0,
+                     tickLength: 0
+            }];
+
+    options.series= [
+                      { name: 'Female', data: [0] },
+                      { name: 'Male', data: [0] },
+                    ];
+    options.plotOptions.series = {stacking: 'normal'};
+    options.colors = [
+            'rgb(255, 66, 14)',           // red
+            'rgb(168, 189, 58)'         // green
+            ];
+
+
+    options.yAxis.labels = {
+                    formatter: function(){
+                        return Math.abs(this.value);
+                    }
+                };
+
+   pyramidThumb = new Highcharts.Chart(options);
 
   }
