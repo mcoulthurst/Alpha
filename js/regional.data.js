@@ -172,8 +172,13 @@ function testPostCode () {
 
 
   function addArea( id ){
-    comparisons.push(id);
-    console.log("ADD " + id);
+console.log( $.inArray( id , comparisons ) );
+    if( $.inArray( id , comparisons ) === -1){
+     comparisons.push(id);
+      console.log("ADD " + id);
+
+    }
+
     //console.log( areaObj[id] );
     updateDisplay();
   }
