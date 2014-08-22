@@ -66,6 +66,7 @@ var regional = (function () {
       console.log("CLEAR");
 
       comparisons =[];
+      updateDisplay();
 
     })
     $("#addBtn").click( function(evt){

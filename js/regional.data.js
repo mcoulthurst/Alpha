@@ -153,10 +153,26 @@ function testPostCode () {
   }
 
 
+
+
+  function removeArea( id ){
+    console.log("REMOVE " + id);
+    console.log( areaObj[id] );
+    var len = comparisons.length - 1;
+
+    for( var i=len; i>=0; i--) {
+      if(comparisons[i] === id) {
+         comparisons.splice(i, 1);
+      }
+    }
+    updateDisplay();
+  }
+
+
+
+
   function addArea( id ){
-
     comparisons.push(id);
-
     console.log("ADD " + id);
     //console.log( areaObj[id] );
     updateDisplay();
