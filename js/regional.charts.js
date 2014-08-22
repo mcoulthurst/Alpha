@@ -49,8 +49,9 @@ var options = {
               spacingLeft:30,
               backgroundColor:'#F9F9F9',
               events: {
-/*
+
                 load: function () {
+                  console.log("on load");
                   var chart = this,
                   yAxis = chart.yAxis[0]
                   titleWidth=0;
@@ -66,7 +67,7 @@ var options = {
 
                 }
 
-                */
+                
               }
             },
 
@@ -153,6 +154,8 @@ var options = {
                       ];
     chartAnnual = new Highcharts.Chart(options);
 
+
+
     // AGE GROUPS
     options.chart.renderTo = 'changeAge';
     options.chart.type = 'bar';
@@ -164,6 +167,8 @@ var options = {
                       { name: 'Under 18', data: [0] }
                     ];
     chartAge = new Highcharts.Chart(options);
+
+
 
     // TREND
     options.chart.renderTo = 'trend';
@@ -188,6 +193,7 @@ var options = {
                     ];
 
     chartTrend = new Highcharts.Chart(options);
+
 
 
     //POPULATION PYRAMIDS
@@ -223,9 +229,6 @@ var options = {
             'rgb(168, 189, 58)'         // green
             ];
 
-
-
-
     options.yAxis.labels = {
                     formatter: function(){
                        // return (Math.abs(this.value) / 1000000) + 'M';
@@ -250,14 +253,41 @@ var options = {
     //ANNUAL CHANGE
     options.chart.renderTo = 'thumbChange';
     options.chart.type = 'bar';
-    options.title.text = null;
-    options.yAxis.title.text = null;
-   // options.yAxis.labels.enabled = false;
-   options.xAxis = {
+   // options.title.text = null;
+    options.title.text = "";
+    options.yAxis.title = {
+                              align: 'high',
+                              offset: 50,
+                              text: 'Change'
+                             
+                          };
+    options.xAxis = {
                      labels: {
                          enabled: false
                      }
                   };
+    options.chart.events= {
+
+                load: function () {
+                  var chart = this,
+                  yAxis = chart.yAxis[0]
+                  titleWidth=0;
+
+                  if(yAxis.axisTitle){
+                    titleWidth = yAxis.axisTitle.getBBox().width;
+                    yAxis.update({
+                      title: {
+                        offset: -80,
+                        align:"low"
+                      }
+                    });
+                  }
+
+                }
+
+                
+              };
+
     options.legend.enabled = false;
     options.plotOptions.series = {};
     options.colors =  [
@@ -273,14 +303,34 @@ var options = {
                       ];
     changeThumb = new Highcharts.Chart(options);
 
+
+
     // TREND
     options.chart.renderTo = 'thumbTrend';
     options.chart.type = 'line';
     options.title.text = '';
-/*    options.xAxis = [{
-                categories : [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-                reversed: false
-            }];*/
+    options.chart.events= {
+
+                load: function () {
+                  console.log("XXX load");
+
+                  var chart = this,
+                  yAxis = chart.yAxis[0]
+                  titleWidth=0;
+
+                  if(yAxis.axisTitle){
+                    titleWidth = yAxis.axisTitle.getBBox().width;
+                    yAxis.update({
+                      title: {
+                        offset: -titleWidth
+                             }
+                    });
+                  }
+
+                }
+
+                
+              };
     options.xAxis = {
                       categories : ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013'],
                      lineWidth: 0,
@@ -294,17 +344,46 @@ var options = {
                      tickLength: 0
                   };
 
-   // options.yAxis.enabled = false;
+    options.yAxis = {
+                     lineWidth: 0,
+                     minorGridLineWidth: 0,
+                     lineColor: 'transparent',
+                     
+                     labels: {
+                         enabled: false
+                     },
+                     title: {
+                              align: 'high',
+                              offset: 0,
+                              text: 'Trend since 2001',
+                              rotation: 0,
+                              y: -10
+                          }
+                  };
+
+ /*   options.yAxis = {
+                     lineWidth: 0,
+                     minorGridLineWidth: 0,
+                     lineColor: 'transparent',
+                     
+                     labels: {
+                         enabled: false
+                     },
+                     minorTickLength: 0,
+                     tickLength: 0
+                  };*/
+    options.title.text = null;
+
     options.plotOptions.series = {  };
     options.plotOptions.line.marker.enabled = false;
     options.series= [
                       { data: [0] }
                     ];
-                    options.tooltip = {
-    formatter: function() {
-        return 'Population <b>' + Math.abs(this.y) + '</b>, ('+ this.x +')';
+    options.tooltip = {
+      formatter: function() {
+          return 'Population <b>' + Math.abs(this.y) + '</b>, ('+ this.x +')';
+      }
     }
-}
     trendThumb = new Highcharts.Chart(options);
 
 
@@ -344,10 +423,12 @@ var options = {
                      minorTickLength: 0,
                      tickLength: 0
             }];
-
+    options.yAxis.title = {
+                              text: ''
+                          };
     options.series= [
-                      { name: 'Female', data: [0] },
                       { name: 'Male', data: [0] },
+                      { name: 'Female', data: [0] },
                     ];
     options.plotOptions.series = {stacking: 'normal'};
     options.colors = [
@@ -361,6 +442,13 @@ var options = {
                         return Math.abs(this.value);
                     }
                 };
+    options.tooltip = {
+      formatter: function() {
+          return '<b>'+ this.series.name +', age '+ this.point.category +'</b><br/>'+
+                    'Population: '+ Highcharts.numberFormat(Math.abs(this.point.y), 0);
+      }
+    }
+
 
    pyramidThumb = new Highcharts.Chart(options);
 

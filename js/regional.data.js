@@ -235,7 +235,7 @@ function testPostCode () {
       changeThumb.series[2].setData( [areaObj[id].changes["natural change"]] );
       changeThumb.series[2].name = "Natural Change";
       changeThumb.series[1].setData( [areaObj[id].changes["Internal Net"]] );
-      changeThumb.series[1].name = "UK";
+      changeThumb.series[1].name = "UK Movement";
       changeThumb.series[0].setData( [areaObj[id].changes["International Net"]] );
       changeThumb.series[0].name = "Migration";
       changeThumb.xAxis[0].setCategories( [areaObj[id].name] );
