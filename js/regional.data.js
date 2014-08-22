@@ -102,7 +102,9 @@ function testPostCode () {
     console.log("ONS " + ons_id );
 
     //updateDisplay( ons_id );
-    addArea( ons_id );
+   //addArea( ons_id );
+    setArea( ons_id );
+    showSummary(ons_id);
   }
 
 
@@ -124,7 +126,9 @@ function testPostCode () {
     var ons_id = data.areas[council].codes.gss;
     console.log("ONS " + ons_id );
 
-    updateDisplay( ons_id );
+    //updateDisplay( ons_id );
+        setArea( ons_id );
+    showSummary(ons_id);
    // getBoundaries(ons_id);
     showPoint(lat,lon);
   }
@@ -179,24 +183,24 @@ function testPostCode () {
       console.log("get grandparent data " + parent + " is " + region );
 
     }
-
+         
     if(region==="region"){
       $("#parent_name").text(areaObj[parent].name);
       $("#parent_pop").text( areaObj[parent].trends[12]);
-      $("#gparent_name").text( "" );
+      $("#gparent_name").html( "&nbsp;" );
       $("#gparent_pop").text( " ");
-      $("#ancestor_name").text( "" );
+      $("#ancestor_name").html( "&nbsp;" );
       $("#ancestor_pop").text( "");
     };
 
-    if(region==="county"){
+    if( region === "county" || region === "unitary" || region === "London borough"  || region === "Metropolitan district"  || region === "NI district" || region === "Sc district"  || region === "W district"){
         $("#parent_name").text(areaObj[parent].name);
         $("#parent_pop").text( areaObj[parent].trends[12]);
 
         $("#gparent_name").text( areaObj["K02000001"].name );
         $("#gparent_pop").text( areaObj["K02000001"].trends[12]);
 
-        $("#ancestor_name").text("");
+        $("#ancestor_name").html("&nbsp;");
         $("#ancestor_pop").text( "" );
     }
 

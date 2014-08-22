@@ -218,8 +218,8 @@ var options = {
                 }
             }];
     options.series= [
-                      { name: 'Female', data: [0] },
                       { name: 'Male', data: [0] },
+                      { name: 'Female', data: [0] },
                     ];
     options.plotOptions.series = {
                     stacking: 'normal'
