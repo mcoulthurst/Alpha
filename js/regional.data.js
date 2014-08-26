@@ -328,6 +328,22 @@ console.log( $.inArray( id , comparisons ) );
     }
   }
 
+  console.log(natural.length);
+  if(natural.length===0){
+  console.log("RESET");
+    natural = [0];
+    uk = [0];
+    migration = [0];
+    totalCats = [0];
+    u18 = [0];
+    adult = [0];
+    o64 = [0];
+  }
+
+  console.log(u18);
+  console.log(adult);
+  console.log(o64);
+
   $.each(trends, function (index, value){
     console.log(name[index]);
     chartTrend.series[index].setData( value );
@@ -336,8 +352,6 @@ console.log( $.inArray( id , comparisons ) );
     chartTrend.series[index].update({ showInLegend: true});
     chartTrend.legend.allItems[index].update( {name: name[index]}  );
   });
-
-
 
 
       chartAnnual.series[2].setData( natural );
@@ -353,22 +367,26 @@ console.log( $.inArray( id , comparisons ) );
       chartAge.series[2].setData( u18 );
       chartAge.series[1].setData( adult );
       chartAge.series[0].setData( o64 );
-      chartAge.xAxis[0].setCategories(totalCats);
+      //chartAge.xAxis[0].setCategories(totalCats);
+
+
 
       for ( var i=0;i<4;i++){
-          var pyramid = pyr[i];
+        var pyramid = pyr[i];
         if(name[i]){
           pyramid.setTitle({text: name[i] });
           pyramid.series[1].setData( female[i] );
           pyramid.series[0].setData( male[i] );
-       }else{
-        console.log("i " + i);
+        }else{
+          console.log("i " + i);
           pyramid.setTitle({text: "" });
           pyramid.series[1].setData( [0] );
           pyramid.series[0].setData( [0] );
-       }
+        }
 
       }
+    
+
 
 
 }
