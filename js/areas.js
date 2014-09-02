@@ -79,7 +79,7 @@ var areas = (function () {
           }
 
 
-          if( value.entity === "county" || value.entity === "unitary" || value.entity === "London borough"  || value.entity === "Metropolitan district"  || value.entity === "NI district" || value.entity === "Sc district"  || value.entity === "W district"){
+          if( value.entity === "county" || value.entity === "unitary" || value.entity === "London borough"  || value.entity === "Metropolitan district"  || value.entity === "met county"  || value.entity === "NI district" || value.entity === "Sc district"  || value.entity === "W district"){
             //console.log("got entity " + value.code + ":: "+ value.name + ":: "+ value.region + ":: "+ idDictionary[value.region]);
             var parent = idDictionary[value.region];
 
